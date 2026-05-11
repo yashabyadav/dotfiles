@@ -1,0 +1,8 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_CLASSES_ROOT\*\shell\CopyFileURL]
+@="Copy File URL"
+"Icon"="shell32.dll,-16769"
+
+[HKEY_CLASSES_ROOT\*\shell\CopyFileURL\command]
+@="powershell -windowstyle hidden -command \"Set-Clipboard ('file:///' + '%1'.Replace('\\\\', '/').Replace(' ', '%%20'))\""
