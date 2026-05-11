@@ -2,9 +2,26 @@
   "$schema": "https://github.com/glzr-io/zebar/raw/v3.1.1/resources/settings-schema.json",
   "startupConfigs": [
     {
-      "pack": "glzr-io.starter",
+      "pack": "emptope.paix",
       "widget": "with-glazewm",
-      "preset": "default"
+      "preset": "default",
+      "overrides": {
+        "right": [
+          {
+            "type": "script",
+            "name": "Workspaces+Titles",
+            "interval_ms": 1000,
+            "command": "powershell -NoProfile -ExecutionPolicy Bypass -File \"$env:USERPROFILE\\.glzr\\glazewm\\scripts\\workspace-labels.ps1\"",
+            "on_click": {
+              "action": "shell",
+              "command": "glazewm command workspace focus {index}"
+            },
+            "font_size": 12,
+            "padding": "6 10"
+          }
+        ]
+      }
     }
   ]
 }
+
