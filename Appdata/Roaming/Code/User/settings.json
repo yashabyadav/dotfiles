@@ -1,0 +1,243 @@
+{
+    "github.copilot.nextEditSuggestions.enabled": false,
+    "vim.smartRelativeLine": true,
+    "python.defaultInterpreterPath": "c:\\Users\\yay223\\AppData\\Local\\anaconda3",
+    "editor.minimap.enabled": false,
+    "editor.wordWrap": "on",
+    "editor.lineNumbers": "relative",
+    "remote.SSH.remotePlatform": {
+        "sol.cc.lehigh.edu": "linux"
+    },
+    "editor.fontFamily": "JetBrains Mono",
+    "editor.fontLigatures": true,
+    "redhat.telemetry.enabled": false,
+    "chat.fontSize": 15,
+    "markdown-preview-enhanced.previewTheme": "github-dark.css",
+    "workbench.iconTheme": "icons",
+    "glassit.alpha": 255,
+    "powershell.promptToUpdatePowerShell": false,
+    "chat.tools.terminal.autoApprove": {
+        "Get-Process": true,
+        "/^python \"00 XYZ-BND Merge Scripts\\\\xyz_bnd_to_lmps_parallel\\.py\" \"D:\\\\yay223\\\\Dip1 Project Simulation Data and Analysis\\\\Simulation Data\\\\04 Turnover and tiny cluster deletion\\\\varying_denovo_seeding_rate_sims_hard_coded_bead_friction_old_Sim_cpp\" -sr 1 -y --workers 1$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "Set-Location": true,
+        "/^Set-Location '\\.\\\\00 XYZ-BND Merge Scripts'; python xyz_bnd_to_lmps_parallel\\.py \"D:\\\\yay223\\\\Dip1 Project Simulation Data and Analysis\\\\Simulation Data\\\\04 Turnover and tiny cluster deletion\\\\varying_denovo_seeding_rate_sims_hard_coded_bead_friction_old_Sim_cpp\" -sr 1\\.0 -f 5 -y --workers 1 2>&1 \\| Select-Object -First 30$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^Set-Location '\\.\\\\00 XYZ-BND Merge Scripts'; python xyz_bnd_to_lmps_parallel\\.py \"D:\\\\yay223\\\\Dip1 Project Simulation Data and Analysis\\\\Simulation Data\\\\04 Turnover and tiny cluster deletion\\\\varying_denovo_seeding_rate_sims_hard_coded_bead_friction_old_Sim_cpp\" -sr 1\\.0 -f 5 -y --workers 1 2>&1 \\| Select-Object -First 50$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^python -m py_compile \"02 Plotting Scripts/06B_compare_orientations_subdir\\.py\"$/": {
+            "approve": true,
+            "matchCommandLine": true
+        }
+    },
+
+    
+    "vim.leader": "<space>",
+
+
+    "vim.commandLineRelativeFontSize": 2,
+    "vim.showCommandLine": true,
+    "vim.useCtrlKeys": true,
+    "vim.handleKeys": {
+        "<C-w>": true
+    },
+    "vim.normalModeKeyBindingsNonRecursive": [
+        {
+            "before": [
+                "<C-w>",
+                "v"
+            ],
+            "commands": [
+                "workbench.action.splitEditorRight"
+            ]
+        },
+        {
+            "before": [
+                "<C-w>",
+                "s"
+            ],
+            "commands": [
+                "workbench.action.splitEditorDown"
+            ]
+        },
+        {
+            "before": [
+                "<C-w>",
+                "c"
+            ],
+            "commands": [
+                "workbench.action.closeActiveEditor"
+            ]
+        },
+        {
+            "before": [
+                "<C-w>",
+                "h"
+            ],
+            "commands": [
+                "workbench.action.focusLeftGroup"
+            ]
+        },
+        {
+            "before": [
+                "<C-w>",
+                "l"
+            ],
+            "commands": [
+                "workbench.action.focusRightGroup"
+            ]
+        },
+        {
+            "before": [
+                "<C-w>",
+                "k"
+            ],
+            "commands": [
+                "workbench.action.focusAboveGroup"
+            ]
+        },
+        {
+            "before": [
+                "<C-w>",
+                "j"
+            ],
+            "commands": [
+                "workbench.action.focusBelowGroup"
+            ]
+        },
+        {
+            "before": [
+                "<leader>",
+                "e"
+            ],
+            "commands": [
+                "workbench.view.explorer", // show Explorer view
+                "workbench.files.action.focusFilesExplorer" // put focus in it
+            ]
+        },
+        {
+            "before": [
+                "<leader>",
+                "t"
+            ],
+            "commands": [
+                "workbench.action.terminal.toggleTerminal",
+                "workbench.action.terminal.focus"
+            ]
+        },
+        {
+            "before": [
+                "<C-w>",
+                "t"
+            ],
+            "commands": [
+                "workbench.action.terminal.toggleTerminal",
+                "workbench.action.terminal.focus"
+            ]
+        },
+        {
+            "before": [
+                "<C-w>",
+                "p"
+            ],
+            "commands": [
+                "workbench.action.focusActiveEditorGroup"
+            ]
+        },
+        // Custom keybindings for navigating between open editors (tabs)
+        {
+            "before": [
+                "<S-l>"
+            ],
+            "commands": [
+                "workbench.action.nextEditor"
+            ]
+        },
+        {
+            "before": [
+                "<S-h>"
+            ],
+            "commands": [
+                "workbench.action.previousEditor"
+            ]
+        },
+        // Quick file open (replaces :find)
+        {
+            "before": [
+                "<leader>",
+                "f"
+            ],
+            "commands": [
+                "workbench.action.quickOpen"
+            ]
+        },
+        // Focus/unfocus the explorer
+        {
+            "before": [
+                "<leader>",
+                "e"
+            ],
+            "commands": [
+                "workbench.files.action.focusFilesExplorer"
+            ]
+        },
+        // File operations
+        {
+            "key": "a",
+            "command": "explorer.newFile",
+            "when": "explorerViewletFocus"
+        },
+        {
+            "key": "shift+a",
+            "command": "explorer.newFolder",
+            "when": "explorerViewletFocus"
+        },
+        {
+            "key": "r",
+            "command": "renameFile",
+            "when": "explorerViewletFocus"
+        },
+        {
+            "key": "d",
+            "command": "moveFileToTrash",
+            "when": "explorerViewletFocus"
+        },
+        {
+            "key": "y",
+            "command": "filesExplorer.copy",
+            "when": "explorerViewletFocus"
+        },
+        {
+            "key": "p",
+            "command": "filesExplorer.paste",
+            "when": "explorerViewletFocus"
+        },
+        // Jump back to editor without grabbing the mouse
+        {
+            "key": "escape",
+            "command": "workbench.action.focusActiveEditorGroup",
+            "when": "explorerViewletFocus"
+        },
+    ],
+    "liveServer.settings.donotVerifyTags": true,
+    "terminal.integrated.fontFamily": "JetBrainsMono Nerd Font",
+    "terminal.integrated.fontSize": 12,
+    "makefile.configureOnOpen": true,
+    "window.menuBarVisibility": "compact",
+    "indentRainbow.indicatorStyle": "light",
+    "claudeCode.preferredLocation": "panel",
+    "chat.editor.fontSize": 12.5,
+    "editor.fontSize": 12.5,
+    "chat.viewSessions.orientation": "stacked",
+    "python.createEnvironment.trigger": "off",
+    "workbench.browser.enableChatTools": true,
+    "claudeCode.useTerminal": true,
+    "terminal.integrated.mouseWheelScrollSensitivity": 3,
+    "workbench.colorTheme": "One Hunter Theme"
+}

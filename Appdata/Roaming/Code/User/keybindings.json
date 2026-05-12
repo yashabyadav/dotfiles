@@ -1,0 +1,16 @@
+[
+  // Cross-pane navigation — editor, sidebar, AI panel
+  { "key": "ctrl+h", "command": "workbench.action.navigateLeft" },
+  { "key": "ctrl+j", "command": "workbench.action.navigateDown" },
+  { "key": "ctrl+k", "command": "workbench.action.navigateUp" },
+  { "key": "ctrl+l", "command": "workbench.action.navigateRight" },
+
+  // Terminal overrides — cycle splits, but h/l still escape to adjacent panes
+  { "key": "ctrl+h", "command": "workbench.action.navigateLeft",              "when": "terminalFocus" },
+  { "key": "ctrl+j", "command": "workbench.action.terminal.focusNextPane",    "when": "terminalFocus" },
+  { "key": "ctrl+k", "command": "workbench.action.terminal.focusPreviousPane","when": "terminalFocus" },
+  { "key": "ctrl+l", "command": "workbench.action.navigateRight",             "when": "terminalFocus" },
+
+  // Stop vscodevim eating ctrl+h in normal mode
+  { "key": "ctrl+h", "command": "-extension.vim_ctrl+h", "when": "editorTextFocus && vim.active && vim.mode == 'Normal'" },
+]
