@@ -3,7 +3,7 @@
   "startupConfigs": [
     {
       "pack": "emptope.paix",
-      "widget": "with-glazewm",
+      "widget": "top-bar",
       "preset": "default",
       "overrides": {
         "right": [
