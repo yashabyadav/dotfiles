@@ -21,3 +21,6 @@ function fznv {
 #oh-my-posh.exe init pwsh --config "C:\Users\yasha\Documents\Windows Customization\oh-my-posh-configs\chips.omp.json"| Invoke-Expression
 #oh-my-posh.exe init pwsh --config "C:\Users\yasha\Documents\Windows Customization\oh-my-posh-configs\dia4m0nd.omp.json"| Invoke-Expression
 oh-my-posh.exe init pwsh --config "C:\Users\yasha\Documents\Windows Customization\oh-my-posh-configs\emodipt-extend.omp.json"| Invoke-Expression
+
+# zoxide init (defines the z command)
+Invoke-Expression (& { (zoxide init powershell | Out-String) })
