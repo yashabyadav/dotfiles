@@ -1,11 +1,18 @@
 # Prints one line like: 1 - Edge | 2 - ChatGPT + Gmail | 3 - VS Code | …
 $ErrorActionPreference = 'SilentlyContinue'
 
-# Cache for "last active" titles, so names persist
+# Cache for "last active" titles, so names persist. Stored as a hashtable
+# (not the PSCustomObject ConvertFrom-Json would give us) so ContainsKey/[] work.
 $cachePath = Join-Path $env:LOCALAPPDATA 'glazewm_ws_cache.json'
 $cache = @{}
-if (Test-Path $cachePath) { try { $cache = Get-Content $cachePath -Raw | ConvertFrom-Json } catch {} }
-if (-not $cache) { $cache = @{} }
+if (Test-Path $cachePath) {
+  try {
+    $loaded = Get-Content $cachePath -Raw | ConvertFrom-Json
+    if ($loaded) {
+      $loaded.PSObject.Properties | ForEach-Object { $cache[$_.Name] = @{ lastActive = $_.Value.lastActive } }
+    }
+  } catch {}
+}
 
 function Shorten([string]$s, [int]$len=16) {
   if (-not $s) { return '' }
@@ -14,57 +21,34 @@ function Shorten([string]$s, [int]$len=16) {
   return $s.Substring(0, $len-1) + '…'
 }
 
-# --- Helpers to read GlazeWM state across versions ---
-function Get-Ws {
-  $raw = glazewm query workspaces
-  try { return ($raw | ConvertFrom-Json) } catch { return @() }
-}
-function Get-Windows {
-  # Try direct "windows" first (newer builds), else parse "tree" (older builds)
-  $raw = glazewm query windows
-  $json = $null
-  try { $json = ($raw | ConvertFrom-Json) } catch {}
-  if ($json) { return $json }
-
-  $raw2 = glazewm query tree
-  try {
-    $tree = ($raw2 | ConvertFrom-Json)
-    # Flatten any windows in the tree to a simple list having id, title, workspace_id, is_focused
-    $list = New-Object System.Collections.Generic.List[object]
-    function Walk($n) {
-      if ($n -and $n.windows) {
-        foreach ($w in $n.windows) { $list.Add($w) }
-      }
-      if ($n -and $n.nodes) { foreach ($c in $n.nodes) { Walk $c } }
-    }
-    Walk $tree
-    return $list
-  } catch { return @() }
+# Recursively collect window nodes nested under a workspace (they may sit
+# inside split containers rather than directly under the workspace).
+function Get-WorkspaceWindows($workspace) {
+  $result = New-Object System.Collections.Generic.List[object]
+  function Walk($n) {
+    if (-not $n) { return }
+    if ($n.type -eq 'window') { $result.Add($n); return }
+    if ($n.children) { foreach ($c in $n.children) { Walk $c } }
+  }
+  if ($workspace.children) { foreach ($c in $workspace.children) { Walk $c } }
+  return $result
 }
 
-$workspaces = Get-Ws
-$windows    = Get-Windows
-
-# Build lookup: workspace_id -> windows[]
-$byWs = @{}
-foreach ($w in $windows) {
-  $wsId = $w.workspace_id
-  if (-not $wsId) { continue }
-  if (-not $byWs.ContainsKey($wsId)) { $byWs[$wsId] = New-Object System.Collections.ArrayList }
-  [void]$byWs[$wsId].Add($w)
-}
+$raw = glazewm query workspaces
+$workspaces = @()
+try { $workspaces = ($raw | ConvertFrom-Json).data.workspaces } catch {}
+if (-not $workspaces) { $workspaces = @() }
 
 $labels = New-Object System.Collections.Generic.List[string]
 
-foreach ($ws in $workspaces | Sort-Object index) {
+foreach ($ws in $workspaces | Sort-Object { [int]$_.name }) {
   $wsId  = $ws.id
-  $index = $ws.index
+  $index = $ws.name
 
-  $wsWins = @()
-  if ($byWs.ContainsKey($wsId)) { $wsWins = $byWs[$wsId] }
+  $wsWins = Get-WorkspaceWindows $ws
 
   # Prefer focused window in that workspace; else cached lastActive; else first title
-  $focused = $wsWins | Where-Object { $_.is_focused -eq $true } | Select-Object -First 1
+  $focused = $wsWins | Where-Object { $_.hasFocus -eq $true } | Select-Object -First 1
 
   $title1 = $null
   $title2 = $null
@@ -92,4 +76,3 @@ foreach ($ws in $workspaces | Sort-Object index) {
 try { $cache | ConvertTo-Json -Depth 5 | Set-Content -Path $cachePath -Encoding UTF8 } catch {}
 $sep = '  |  '
 $labels -join $sep
-
